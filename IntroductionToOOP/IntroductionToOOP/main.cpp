@@ -1,5 +1,10 @@
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
+
+#define delimiter "\n----------------------------------------------\n"
 
 class Point
 {
@@ -23,7 +28,49 @@ public:
 		this->y = y;
 	}
 
-	double distance(Point other)
+	//					Constructors:
+	/*Point()
+	{
+		x = y = double();	//type() - то значение по умолчанию дл€ заданного типа
+							//тким образом мы €кобы вызываем конструктор по умолчанию дл€ заданного типа
+		cout << "DefaultConstructor:\t" << this << endl;
+	}
+	Point(double x)
+	{
+		this->x = x;
+		this->y = 0;
+		cout << "1ArgConstructor:\t" << this << endl;
+	}*/
+	Point(double x = 0, double y = 0)
+	{
+		this->x = x;
+		this->y = y;
+		cout << "Constructor:\t\t" << this << endl;
+	}
+	//Deep copy
+	//Shallow copy
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstructor:\t" << this << endl;
+	}
+	~Point()
+	{
+		cout << "Destructor:\t\t" << this << endl;
+	}
+
+	//					Operators:
+	Point& operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
+
+	//					 Methods:
+	double distance(const Point& other)const
 	{
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
@@ -36,7 +83,7 @@ public:
 	}
 };
 
-double distance(Point A, Point B)
+double distance(const Point& A, const Point& B)
 {
 	//pow(base, exponent);
 	//base - основание степени;
@@ -49,10 +96,11 @@ double distance(Point A, Point B)
 	return distance;
 }
 
-Point A;
+//Point A;
 
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
+//#define CONSTRUCTORS_CHECK
 
 void main()
 {
@@ -81,11 +129,15 @@ void main()
 	B.set_x(7);
 	B.set_y(8);
 	cout << "B:\t" << B.get_x() << "\t" << B.get_y() << endl;
-
+	cout << delimiter << endl;
 	cout << "–ассто€ние от точки 'A' до точки 'B':\t" << A.distance(B) << endl;
+	cout << delimiter << endl;
 	cout << "–ассто€ние от точки 'B' до точки 'A':\t" << B.distance(A) << endl;
+	cout << delimiter << endl;
 	cout << "–ассто€ние между точками 'A' и 'B':\t" << distance(A, B) << endl;
+	cout << delimiter << endl;
 	cout << "–ассто€ние между точками 'B' и 'A':\t" << distance(B, A) << endl;
+	cout << delimiter << endl;
 #endif // DISTANCE_CHECK
 
 	/*for (int i = 0; i < 10; i++)
@@ -95,8 +147,38 @@ void main()
 	cout << i << endl;
 	cout << endl;*/
 
-	Point A;	//Default constructor
+#ifdef CONSTRUCTORS_CHECK
+	cout << char() << endl;
+	//RAII - Resource Aquilisation - Is Initialisation	(¬се что объ€вл€етс€ об€зательно должно быть проинициализировано)
+	//		 (¬ыделение ресурсов - это инициализаци€)
+	Point A;		//Default constructor
 	A.print();
+
+	Point B = 5;	//Single-argument constructor
+	B.print();
+
+	Point C(2, 3);
+	C.print();
+
+	Point D = C;	//CopyConstructor
+	D.print();
+
+	Point E;
+	E = D;			//CopyAssignemtn
+	E.print();
+#endif // CONSTRUCTORS_CHECK
+
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << endl;
+
+	Point A, B, C;
+
+	A = B = C = Point(2, 3);
+
+	A.print();
+	B.print();
+	C.print();
 }
 
 /*
