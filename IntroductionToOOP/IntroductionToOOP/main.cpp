@@ -68,6 +68,26 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	Point& operator+=(const Point& other)
+	{
+		this->x += other.x;
+		this->y += other.y;
+		return *this;
+	}
+
+	Point& operator++()	//Prefix increment
+	{
+		x++;
+		y++;
+		return *this;
+	}
+	Point operator++(int)
+	{
+		Point old = *this;	// сохраняем исходное значение объекта
+		x++;
+		y++;
+		return old;
+	}
 
 	//					 Methods:
 	double distance(const Point& other)const
@@ -83,6 +103,11 @@ public:
 	}
 };
 
+ostream& operator<<(ostream& os, const Point& obj)
+{
+	return os << "X = " << obj.get_x() << "\tY = " << obj.get_y();
+}
+
 double distance(const Point& A, const Point& B)
 {
 	//pow(base, exponent);
@@ -96,11 +121,31 @@ double distance(const Point& A, const Point& B)
 	return distance;
 }
 
+Point operator+(const Point& left, const Point& right)
+{
+	/*Point ;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());*/
+	/*Point result
+	(
+		left.get_x() + right.get_x(), 
+		left.get_y() + right.get_y()
+	);
+	return result;*/
+	return Point
+	(
+		left.get_x() + right.get_x(),
+		left.get_y() + right.get_y()
+	);
+}
+
 //Point A;
 
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
 //#define CONSTRUCTORS_CHECK
+//#define ASSIGNMENT_CHECK
+//#define INCREMENT_CHECK
 
 void main()
 {
@@ -168,6 +213,7 @@ void main()
 	E.print();
 #endif // CONSTRUCTORS_CHECK
 
+#ifdef ASSIGNMENT_CHECK
 	int a, b, c;
 	a = b = c = 0;
 	cout << a << "\t" << b << "\t" << c << endl;
@@ -179,6 +225,35 @@ void main()
 	A.print();
 	B.print();
 	C.print();
+#endif // ASSIGNMENT_CHECK
+
+#ifdef INCREMENT_CHECK
+	int a = 2;
+	int b = 3;
+	int c = a + b;
+	cout << c << endl;
+
+	Point A(2, 3);
+	Point B(7, 8);
+	Point C = A + B;
+	C.print();
+
+	A = B++;
+	A.print();
+	B.print();
+#endif // INCREMENT_CHECK
+
+	Point A(2, 3);
+	A.print();
+
+	Point B(7, 8);
+	B.print();
+
+	A += B;
+	//A.print();
+
+	//cout << typeid(cout).name() << endl;
+	cout << A << endl;
 }
 
 /*
@@ -216,5 +291,25 @@ void main()
 
 2. ~Destructor - это метод, который уничтожает объект по завершении его времени жизни;
 3. Assignment operator;
+---------------------------------
+*/
+
+/*
+---------------------------------
+1. Перегрузить можно только существующие операторы:
+	+  - перегружается;
+	++ - перегружается;
+	*  - перегружается;
+	** - НЕ перегружается;
+2. Не все существующие операторы можно перегрузить.
+   Не перегружаются:
+	:: - Оператор разрешения видимости (Scope operator);
+	?: - Conditional Ternary operator;
+	.  - Оператор прямого доступа (Point operator)
+	.* - Pointer to member selection
+	#  - Preprocessor directive
+	## - Preprocessor concatenation
+3. Перегруженные операторы сохраняют приоритет;
+4. Переопределить поведение операторов над встроенными типами невозможно;
 ---------------------------------
 */
