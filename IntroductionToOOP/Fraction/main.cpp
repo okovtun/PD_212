@@ -1,11 +1,14 @@
-#include<iostream>
+Ôªø#include<iostream>
 using namespace std;
+
+class Fraction;
+Fraction operator*(Fraction left, Fraction right);
 
 class Fraction
 {
-	int integer;	//ˆÂÎ‡ˇ ˜‡ÒÚ¸
-	int numerator;	//˜ËÒÎËÚÂÎ¸
-	int denominator;//ÁÌ‡ÏÂÌ‡ÚÂÎ¸
+	int integer;	//—Ü–µ–ª–∞—è —á–∞—Å—Ç—å
+	int numerator;	//—á–∏—Å–ª–∏—Ç–µ–ª—å
+	int denominator;//–∑–Ω–∞–º–µ–Ω–∞—Ç–µ–ª—å
 public:
 	int get_integer()const
 	{
@@ -38,7 +41,7 @@ public:
 	{
 		this->integer = 0;
 		this->numerator = 0;
-		this->denominator= 1;
+		this->denominator = 1;
 		cout << "DefaultConstruct:" << this << endl;
 	}
 	Fraction(int integer)
@@ -83,11 +86,55 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+	Fraction& operator*=(const Fraction& other)
+	{
+		return *this = *this*other;
+	}
 
 	//					Methods:
+	Fraction& to_improper()
+	{
+		numerator += integer * denominator;
+		integer = 0;
+		return *this;
+	}
+	Fraction& to_proper()
+	{
+		integer += numerator / denominator;
+		numerator %= denominator;
+		return *this;
+	}
+	Fraction inverted()const
+	{
+		Fraction inverted = *this;
+		inverted.to_improper();
+		std::swap(inverted.numerator, inverted.denominator);
+		return inverted;
+	}
+	Fraction& reduce()
+	{
+		//https://www.webmath.ru/poleznoe/formules_12_7.php
+		/*int more, less, rest;
+		if (numerator > denominator)more = numerator, less = denominator;
+		else less = numerator, more = denominator;*/
+		to_proper();
+		int less = numerator;
+		int more = denominator;
+		int rest;
+		do
+		{
+			rest = more % less;
+			more = less;
+			less = rest;
+		} while (rest);
+		int GCD = more;	//GCD - Greatest Common Divisor (–ù–∞–∏–±–æ–ª—å—à–∏–π –æ–±—â–∏–π –¥–µ–ª–∏—Ç–µ–ª—å)
+		numerator /= GCD;
+		denominator /= GCD;
+		return *this;
+	}
 	void print()const
 	{
-		if (integer)cout << integer;	//≈ÒÎË ÂÒÚ¸ ˆÂÎ‡ˇ ˜‡ÒÚ¸, ‚˚‚Ó‰ËÏ ÂÂ Ì‡ ˝Í‡Ì 
+		if (integer)cout << integer;	//–ï—Å–ª–∏ –µ—Å—Ç—å —Ü–µ–ª–∞—è —á–∞—Å—Ç—å, –≤—ã–≤–æ–¥–∏–º –µ–µ –Ω–∞ —ç–∫—Ä–∞–Ω 
 		if (numerator)
 		{
 			if (integer)cout << "(";
@@ -99,11 +146,78 @@ public:
 	}
 };
 
+Fraction operator*(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction
+	(
+		left.get_numerator()*right.get_numerator(),
+		left.get_denominator()*right.get_denominator()
+	).to_proper().reduce();
+}
+Fraction operator/(const Fraction& left, const Fraction& right)
+{
+	return left * right.inverted();
+}
+
+bool operator==(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	/*if (left.get_numerator()*right.get_denominator() == right.get_numerator()*left.get_denominator())
+		return true;
+	else
+		return false;*/
+	return left.get_numerator()*right.get_denominator() == right.get_numerator()*left.get_denominator();
+}
+bool operator!=(const Fraction& left, const Fraction& right)
+{
+	return !(left == right);
+}
+bool operator>(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return left.get_numerator()*right.get_denominator() > right.get_numerator()*left.get_denominator();
+}
+bool operator<(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return left.get_numerator()*right.get_denominator() < right.get_numerator()*left.get_denominator();
+}
+bool operator>=(const Fraction& left, const Fraction& right)
+{
+	//return left > right || left == right;
+	return !(left < right);
+}
+bool operator<=(const Fraction& left, const Fraction& right)
+{
+	return !(left > right);
+}
+
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer())os << obj.get_integer();	//–ï—Å–ª–∏ –µ—Å—Ç—å —Ü–µ–ª–∞—è —á–∞—Å—Ç—å, –≤—ã–≤–æ–¥–∏–º –µ–µ –Ω–∞ —ç–∫—Ä–∞–Ω 
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())os << "(";
+		os << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())os << ")";
+	}
+	else if (obj.get_integer() == 0)os << 0;
+	return os;
+}
+
 //#define CONSTRUCTORS_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
+
 #ifdef CONSTRUCTORS_CHECK
 	Fraction A;	//Default constructor
 	A.print();
@@ -125,4 +239,31 @@ void main()
 	F.print();
 #endif // CONSTRUCTORS_CHECK
 
+#ifdef ARITHMETICAL_OPERATORS_CHECK
+	Fraction A(2, 3, 4);
+	A.print();
+
+	Fraction B(3, 16, 20);
+	B.print();
+
+	/*Fraction C = A * B;
+	C.print();
+
+	Fraction D = A / B;
+	D.print();*/
+
+	A *= B;
+	A.print();
+#endif // ARITHMETICAL_OPERATORS_CHECK
+
+#ifdef COMPARISON_OPERATORS_CHECK
+	Fraction A(1, 3);
+	Fraction B(5, 10);
+	cout << (A <= B) << endl;
+#endif // COMPARISON_OPERATORS_CHECK
+
+	Fraction A(5, 10);
+	cout << A << endl;
+	A.reduce();
+	cout << A << endl;
 }
