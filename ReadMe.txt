@@ -2,8 +2,24 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+В Solution 'IntroductionToOOP' добавить проект 'String', и в нем реализовать класс 'String',
+описывающий строку.
+Проверочный код:
+	String str1;	//пустая строка, размером 80 Byte
+	String str2 = 5;//пустая строка, размером 5 Byte
+
+	String str3 = "Hello";
+	cout << str3 << endl;
+
+	String str4 = "World";
+	cout << str4 << endl;
+
+	String str5 = str3 + str4;
+	cout << str5 << endl;
+
+TODO:
 1. Выучить теорию!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-2. В класс 'Fraction' добавить методы:
+2. В класс 'Fraction' добавить методы:	DONE
 	??? to_proper();	//преобразует дробь в правильную
 	??? to_improper();	//преборазует дробь в неправильную
 	??? reduce();		//сокращает дробь		https://www.webmath.ru/poleznoe/formules_12_7.php	DONE
