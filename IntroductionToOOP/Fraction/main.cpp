@@ -2,6 +2,8 @@
 #include<iostream>
 using namespace std;
 
+#define delimiter "\n-------------------------------------\n"
+
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
 
@@ -45,12 +47,22 @@ public:
 		this->denominator = 1;
 		cout << "DefaultConstruct:" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)	//explicit - явный
 	{
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
 		cout << "1ArgConstructor:" << this << endl;
+	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;	//1 * 10^-10;
+		integer = decimal;
+		decimal -= integer;
+		denominator = 1e+9;	//1 * 10^9 точность всегда будет 9 знаков после запятой
+		numerator = decimal * denominator;
+		reduce();
+		cout << "1ArgDConstructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -90,6 +102,16 @@ public:
 	Fraction& operator*=(const Fraction& other)
 	{
 		return *this = *this*other;
+	}
+
+	//					Type-cast operators
+	explicit operator int()const
+	{
+		return integer;
+	}
+	explicit operator double()const
+	{
+		return integer + (double)numerator / denominator;
 	}
 
 	//					Methods:
@@ -264,6 +286,9 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define COMPARISON_OPERATORS_CHECK
 //#define INPUT_CHECK_1
 //#define INPUT_CHECK_2
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+//#define CONVERSION_FROM_CLASS_TO_OTHER
 
 void main()
 {
@@ -327,13 +352,65 @@ void main()
 	cout << A << "\t" << B << "\t" << C << endl;
 #endif // INPUT_CHECK_2
 
+#ifdef TYPE_CONVERSIONS_BASICS
 	//(type)value;	//C-like notation (C-подобная форма записи)
-	//type(value);	//Functional notation (Функциональная форма записи)
+//type(value);	//Functional notation (Функциональная форма записи)
 
 	int a = 2;		//No coversions
 	double b = 3;	//Conversion from less to more
 	int c = b;		//Conversion from more to less without data loss
 	int d = 5.7;	//Conversion from more to less with data loss
 	//int e = "Hello";//Types not compatible
-	cout << 7. / 2 << endl;	//Implicit conversion from less to more.
+	cout << 7. / 2 << endl;	//Implicit conversion from less to more.  
+#endif // TYPE_CONVERSIONS_BASICS
+
+	//1. From other to Class;
+	//2. From Class to other;
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5;	//Conversion from 'int' to 'Fraction'
+		//Conversion from other to Class
+		//Single-arguemnt constructor
+	cout << A << endl;
+	cout << delimiter << endl;
+	Fraction B;		//Default constructor
+	cout << delimiter << endl;
+	B = Fraction(8);
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	//Fraction C = 12;	//explicit constructor невозможно вызвать оператором присваивания.
+	//Fraction C(12);	//explicit constructor можно вызвать только так
+	Fraction C{ 12 };	//или так.
+	cout << C << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSION_FROM_CLASS_TO_OTHER
+	//				Type-cast operators
+/*
+-------------------------------------
+operator type()
+{
+	//conversion algorithm
+	........
+	........
+	return value;
+}
+-------------------------------------
+*/
+	Fraction A(2, 1, 2);
+	cout << A << endl;
+	int a = (int)A;
+	cout << a << endl;
+
+	Fraction B(2, 3, 4);
+	cout << B << endl;
+	double b = (double)B;
+	cout << b << endl;
+#endif // CONVERSION_FROM_CLASS_TO_OTHER
+
+	Fraction A = 2.77;
+	cout << A << endl;
+
+	Fraction B = 3.333;	//http://www.softelectro.ru/ieee754.html
+	cout << B << endl;
 }
