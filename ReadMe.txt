@@ -2,6 +2,9 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+Добавить в класс 'String' Move-методы: https://legacy.cplusplus.com/doc/tutorial/classes2/
+
+DONE:
 В Solution 'IntroductionToOOP' добавить проект 'String', и в нем реализовать класс 'String',
 описывающий строку.
 Проверочный код:
