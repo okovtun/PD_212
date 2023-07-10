@@ -44,6 +44,15 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
+	String(String&& other)
+	{
+		//Shallow copy:
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = 0;
+		cout << "MoveConstructor:" << this << endl;
+	}
 	~String()
 	{
 		delete[] str;
@@ -62,6 +71,18 @@ public:
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
+	String& operator=(String&& other)
+	{
+		if (this == &other)return *this;
+		delete[] this->str;
+		this->size = other.size;
+		this->str = other.str;
+
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t" << this << endl;
 		return *this;
 	}
 	char operator[](int i)const
