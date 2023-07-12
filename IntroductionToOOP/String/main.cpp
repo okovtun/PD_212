@@ -1,5 +1,8 @@
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;;
 
 #define tab "\t"
 #define delimiter "\n-------------------------------------------\n"
@@ -23,32 +26,33 @@ public:
 	}
 
 	//				Constructors:
-	explicit String(int size = 80)
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "DefConstructor:\t" << this << endl;
 	}
-	String(const char* str)
+	String(const char* str) :size(strlen(str) + 1), str(new char[size] {})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size] {};
+		int a(2);
+		//this->size = strlen(str) + 1;
+		//this->str = new char[size] {};
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
 		//Deep copy
-		this->size = other.size;
-		this->str = new char[size] {};
+		//this->size = other.size;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
-	String(String&& other)
+	String(String&& other):size(other.size), str(other.str)
 	{
 		//Shallow copy:
-		this->size = other.size;
-		this->str = other.str;
+		//this->size = other.size;
+		//this->str = other.str;
 		other.size = 0;
 		other.str = 0;
 		cout << "MoveConstructor:" << this << endl;
@@ -109,10 +113,10 @@ String operator+(const String& left, const String& right)
 	String cat(left.get_size() + right.get_size() - 1);
 	for (int i = 0; i < left.get_size(); i++)
 		cat[i] = left[i];
-		//cat.get_str()[i] = left.get_str()[i];
+	//cat.get_str()[i] = left.get_str()[i];
 	for (int i = 0; i < right.get_size(); i++)
 		cat[i + left.get_size() - 1] = right[i];
-		//cat.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	//cat.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return cat;
 }
 
@@ -121,9 +125,14 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
+#define BASE_CHECK
+//#define CALLING_CONSTRUCTORS
+
 void main()
 {
 	setlocale(LC_ALL, "");
+
+#ifdef BASE_CHECK
 	cout << sizeof("Hello") << endl;
 	String str(5);
 	str.print();
@@ -143,4 +152,31 @@ void main()
 	String str4;
 	str4 = str1 + str2;
 	cout << str4 << endl;
+
+	String str5 = str4;
+	cout << str5 << endl;
+#endif // BASE_CHECK
+
+#ifdef CALLING_CONSTRUCTORS
+	String str1;	//Default constructor
+	str1.print();
+
+	String str2(5);
+	str2.print();
+
+	String str3 = "Hello";	//Single-argumrnt constructor
+	str3.print();
+
+	String str4();	//Таким образом, явно не вызывается конструктор по умолчанию, и следовательно объект тоже не создается,
+					//Таким образом объявляется функция 'str4()', которая ничего НЕ принимает, и возвращает значение типа 'String'
+	//str4.print();
+
+	//Если нужно явно вызвать конструктор по умолчанию, то это можно сделать следующим образом:
+	String str5{};	//Явный вызов конструктора по умолчанию
+	str5.print();
+
+	cout << String() << endl;
+	String().print();
+#endif // CALLING_CONSTRUCTORS
+
 }

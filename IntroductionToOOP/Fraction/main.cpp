@@ -9,9 +9,9 @@ Fraction operator*(Fraction left, Fraction right);
 
 class Fraction
 {
-	int integer;	//целая часть
 	int numerator;	//числитель
 	int denominator;//знаменатель
+	int integer;	//целая часть
 public:
 	int get_integer()const
 	{
@@ -33,10 +33,11 @@ public:
 	{
 		this->numerator = numerator;
 	}
-	void set_denominator(int denominator)
+	int set_denominator(int denominator)
 	{
 		if (denominator == 0)denominator = 1;
 		this->denominator = denominator;
+		return this->denominator;
 	}
 
 	//					Constructors:
@@ -71,11 +72,14 @@ public:
 		set_denominator(denominator);
 		cout << "Constructor:\t" << this << endl;
 	}
-	Fraction(int integer, int numerator, int denominator)
+	Fraction(int integer, int numerator, int denominator):
+		integer(integer), 
+		numerator(numerator), 
+		denominator(set_denominator(denominator))
 	{
-		this->integer = integer;
-		this->numerator = numerator;
-		set_denominator(denominator);
+		//this->integer = integer;
+		//this->numerator = numerator;
+		//set_denominator(denominator);
 		cout << "Constructor:\t" << this << endl;
 	}
 	Fraction(const Fraction& other)
@@ -413,4 +417,7 @@ operator type()
 
 	Fraction B = 3.333;	//http://www.softelectro.ru/ieee754.html
 	cout << B << endl;
+
+	Fraction C(2, 3, 4);
+	cout << C << endl;
 }
