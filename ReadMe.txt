@@ -2,6 +2,11 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+1. *Разделить класс 'String' на файлы (будем делать на следующем занятии);
+2. Применить инициализацию в заголовке, и деллегирование в классе Matrix;
+3. Реализовать класс 'Binary', описывающий двоичное число;
+
+DONE:
 В Solution 'IntroductionToOOP' добавить проект 'Matrix', и в этом проекте реализовать класс Matrix,
 описывающий матрицу.
 Необходимо реализовать следующие операции над матрицами: +, -, *, /;
