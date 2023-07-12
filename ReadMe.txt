@@ -2,6 +2,11 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+В Solution 'IntroductionToOOP' добавить проект 'Matrix', и в этом проекте реализовать класс Matrix,
+описывающий матрицу.
+Необходимо реализовать следующие операции над матрицами: +, -, *, /;
+
+DONE:
 Добавить в класс 'String' Move-методы: https://legacy.cplusplus.com/doc/tutorial/classes2/
 
 DONE:
