@@ -2,6 +2,11 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+1. Разделить класс 'Fraction' на файлы;
+2. От ветки 'StringSeparation' создать ветку 'StringLib', в проекте 'String' собрать *.lib-файл,
+   и проветрить его на другом проекте;
+
+DONE:
 1. *Разделить класс 'String' на файлы (будем делать на следующем занятии);
 2. Применить инициализацию в заголовке, и деллегирование в классе Matrix;
 3. Реализовать класс 'Binary', описывающий двоичное число;
