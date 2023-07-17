@@ -2,6 +2,10 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+1. Реализовать класс Teacher;
+2. Реализовать класс Graduate  - Дипломник;
+
+DONE:
 1. Разделить класс 'Fraction' на файлы;
 2. От ветки 'StringSeparation' создать ветку 'StringLib', в проекте 'String' собрать *.lib-файл,
    и проветрить его на другом проекте;
