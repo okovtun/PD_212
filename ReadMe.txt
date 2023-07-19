@@ -2,6 +2,9 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+Перегрузить оператор вывода на экран для всех классов.
+
+DONE:
 1. Реализовать класс Teacher;
 2. Реализовать класс Graduate  - Дипломник;
 

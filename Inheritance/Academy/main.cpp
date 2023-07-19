@@ -22,7 +22,7 @@ public:
 	{
 		return age;
 	}
-	
+
 	void set_last_name(const std::string& last_name)
 	{
 		this->last_name = last_name;
@@ -43,16 +43,26 @@ public:
 		set_age(age);
 		cout << "HConstructor:\t" << this << endl;
 	}
-	~Human()
+	virtual ~Human()
 	{
 		cout << "HDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	virtual std::ostream& print(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << endl;
+		return os << last_name << " " << first_name << " " << age;
 	}
+	//__vfptr - Virtual Functions Pointers
 };
+
+//std::ostream& operator<<(std::ostream& os, const Human& obj)
+//{
+//	return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age();
+//}
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
 
 class Student :public Human
 {
@@ -98,9 +108,9 @@ public:
 	//								Constructors:
 	Student
 	(
-		const std::string& last_name, const std::string& first_name, int age, 
+		const std::string& last_name, const std::string& first_name, int age,
 		const std::string& speciality, const std::string& group, double rating, double attendance
-	):Human(last_name, first_name,age)
+	) :Human(last_name, first_name, age)
 	{
 		set_speciality(speciality);
 		set_group(group);
@@ -113,12 +123,16 @@ public:
 		cout << "SDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+		Human::print(os) << " ";
+		return os << speciality << " " << group << " " << rating << " " << attendance;
 	}
 };
+//std::ostream& operator<<(std::ostream& os, const Student& obj)
+//{
+//	return os << (Human&)obj << obj.get_speciality() << " " << obj.get_group() << " " << obj.get_rating() << " " << obj.get_attendance();
+//}
 
 class Teacher :public Human
 {
@@ -155,10 +169,10 @@ public:
 	{
 		cout << "TDestructor:\t" << this << endl;
 	}
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality << " " << experience << endl;
+		Human::print(os) << " ";
+		return os << speciality << " " << experience;
 	}
 };
 
@@ -188,16 +202,19 @@ public:
 	{
 		cout << "GDenstructor:\t" << this << endl;
 	}
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Student::print();
-		cout << subject << endl;
+		Student::print(os) << " ";
+		return os << subject;
 	}
 };
+
+//#define INHERITANCE
 
 void main()
 {
 	setlocale(LC_ALL, "");
+#ifdef INHERITANCE
 	Human human("Montana", "Antonio", 30);
 	human.print();
 
@@ -209,4 +226,41 @@ void main()
 
 	Graduate grad("Schrader", "Hank", 40, "Criminalistic", "OBN", 50, 50, "How to catch Heisenberg");
 	grad.print();
+#endif // INHERITANCE
+
+
+	//Generalisation 
+	//Upcast
+	Human* group[] =
+	{
+		//Upcast
+		new Student("Pinkman", "Jessie", 25, "Chemistry", "WW_220", 95, 98),
+		new Teacher("White", "Walter", 50, "Chemistry", 20),
+		new Graduate("Schrader", "Hank", 40, "Criminalistic", "OBN", 50, 50, "How to catch Heisenberg")
+	};
+
+	cout << "\n------------------------------------\n";
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		/*cout << typeid(*group[i]).name() << ":\n";
+		group[i]->print();*/
+		//if(typeid(*group[i]) == typeid(Student))
+		//cout << *dynamic_cast<Student*>(group[i]) << endl;//Downcast
+		cout << *group[i] << endl;
+		cout << "\n------------------------------------\n";
+	}
+
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		delete group[i];
+	}
 }
+
+/*
+-------------------------------------------------------------
+Polymorphism (Poly - много, Morphis - форма)
+Ad-hoc polymorphism
+-------------------------------------------------------------
+Inclusion/Runtime Polymorphism
+-------------------------------------------------------------
+*/
