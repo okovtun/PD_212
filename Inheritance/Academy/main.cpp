@@ -301,7 +301,7 @@ Human** load(const std::string& filename, int& n)
 	if (fin.is_open())
 	{
 		//1) Определяем размер массива:
-		for(n=0;!fin.eof();n++)
+		for (n = 0; !fin.eof(); n++)
 		{
 			std::string buffer;
 			std::getline(fin, buffer);
