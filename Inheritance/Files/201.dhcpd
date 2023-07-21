@@ -1,0 +1,71 @@
+host 201-1
+{
+	hardware ethernet	00:19:99:b4:c2:ae;
+	fixed-address		192.168.100.21;
+}
+
+host 201-2
+{
+	hardware ethernet	00:19:99:ae:a8:8e;
+	fixed-address		192.168.100.22;
+}
+
+host 201-3
+{
+	hardware ethernet	00:19:99:b5:e9:9b;
+	fixed-address		192.168.100.23;
+}
+
+host 201-4
+{
+	hardware ethernet	00:19:99:b4:a2:ed;
+	fixed-address		192.168.100.24;
+}
+
+#host 201-5
+#{
+#	hardware ethernet	00:19:99:ad:4f:51;
+#	fixed-address		192.168.100.25;
+#}
+
+host 201-6
+{
+	hardware ethernet	00:19:99:dc:52:80;
+	fixed-address		192.168.100.26;
+}
+
+host 201-7
+{
+	hardware ethernet	00:19:99:b4:a2:fb;
+	fixed-address		192.168.100.27;
+}
+
+host 201-8
+{
+	hardware ethernet	00:19:99:b2:b3:e6;
+	fixed-address		192.168.100.28;
+}
+
+host 201-9
+{
+	hardware ethernet	00:19:99:ae:a5:59;
+	fixed-address		192.168.100.29;
+}
+
+host 201-10
+{
+	hardware ethernet	00:19:99:dc:52:77;
+	fixed-address		192.168.100.30;
+}
+
+host 201-11
+{
+	hardware ethernet	00:19:99:ac:b8:11;
+	fixed-address		192.168.100.31;
+}
+
+host 201-12
+{
+	hardware ethernet	00:19:99:b5:e9:4d;
+	fixed-address		192.168.100.32;
+}
