@@ -1,0 +1,5 @@
+Pinkman     Jessie      25   Chemistry             WW_220 95      98      
+White       Walter      50   Chemistry             20   
+Schrader    Hank        40   Criminalistic         OBN    50      50      
+Vercetty    Tommi       30   Theft                 Vice   95      98      
+Disz        Ricardo     55   Weapons distribution  25   

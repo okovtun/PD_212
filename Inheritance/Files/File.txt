@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Input/output with files - C++ Tutorials</title>
+<link rel="canonical" href="https://cplusplus.com/doc/tutorial/files/">
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/v323/main.css">
+<script src="/v323/main.js" type="text/javascript"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7TV1TJ13CV"></script>
+</head>
+<body>
+<div id="I_top">
+<div id="I_header">
+<div id="I_logo"><a href="/" title="cplusplus.com"><div></div></a></div>
+<div id="I_search">
+<form id="search" action="/search.do" method="get">
+Search: <input name="q" size="20" class="txt"> <input type="submit" value="Go" class="btn">
+</form>
+</div>
+<div id="I_bar">
+<ul>
+<li><a href="/doc/">Tutorials</a></li>
+<li><a href="/doc/tutorial/">C++ Language</a></li>
+<li class="here">Input/output with files</li>
+</ul>
+</div>
+<div id="I_user" class="C_LoginBox"><span title="ajax"></span></div>
+</div>
+</div>
+<div id="I_mid">
+<div id="I_wrap">
+<div id="I_minheight"></div>
+<div id="I_main">
+<!-- leaderboard -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-1444228343479937"
+     data-ad-slot="9701143201"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="I_content">
+<div class="C_doc">
+<h1>Input/output with files</h1>
+<section id="intro">
+C++ provides the following classes to perform output and input of characters to/from files: <br>
+<br>
+<ul>
+<li><b><code><a href="/ofstream">ofstream</a></code>:</b> Stream class to write on files</li>
+<li><b><code><a href="/ifstream">ifstream</a></code>:</b> Stream class to read from files</li>
+<li><b><code><a href="/fstream">fstream</a></code>:</b> Stream class to both read and write from/to files.</li>
+</ul>
+<br>
+These classes are derived directly or indirectly from the classes <code>istream</code> and <code>ostream</code>. We have already used objects whose types were these classes: <code>cin</code> is an object of class <code>istream</code> and <code>cout</code> is an object of class <code>ostream</code>. Therefore, we have already been using classes that are related to our file streams. And in fact, we can use our file streams the same way we are already used to use <code>cin</code> and <code>cout</code>, with the only difference that we have to associate these streams with physical files. Let's see an example:<br>
+<br>
+<div class="auto"><table class="split"><tr><td class="rownum"><pre><code>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br></code></pre></td>
+<td class="source"><pre><code><cite>// basic file operations</cite>
+<dfn>#include &lt;iostream&gt;</dfn>
+<dfn>#include &lt;fstream&gt;</dfn>
+<var>using</var> <var>namespace</var> std;
+
+<var>int</var> main () {
+  ofstream myfile;
+  myfile.open (<kbd>"example.txt"</kbd>);
+  myfile &lt;&lt; <kbd>"Writing this to a file.\n"</kbd>;
+  myfile.close();
+  <var>return</var> 0;
+}</code></pre></td>
+<td class="output"><pre><samp>[file example.txt]
+Writing this to a file.</samp></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+This code creates a file called <code>example.txt</code> and inserts a sentence into it in the same way we are used to do with <code>cout</code>, but using the file stream <code>myfile</code> instead.<br>
+<br>
+But let's go step by step:<br>
+</section>
+<br>
+<section id="opean_a_file">
+<h3>Open a file</h3>
+The first operation generally performed on an object of one of these classes is to associate it to a real file. This procedure is known as to <i>open a file</i>. An open file is represented within a program by a <i>stream</i> (i.e., an object of one of these classes; in the previous example, this was <code>myfile</code>) and any input or output operation performed on this stream object will be applied to the physical file associated to it.<br>
+<br>
+In order to open a file with a stream object we use its member function <code>open</code>:<br>
+<br>
+<code>
+open (filename, mode);<br>
+</code>
+<br>
+Where <code>filename</code> is a string representing the name of the file to be opened, and <code>mode</code> is an optional parameter with a combination of the following flags:<br>
+<br>
+<table class="boxed">
+<tr><td><code>ios::in</code></td><td>Open for input operations.</td></tr>
+<tr><td><code>ios::out</code></td><td>Open for output operations.</td></tr>
+<tr><td><code>ios::binary</code></td><td>Open in binary mode.</td></tr>
+<tr><td><code>ios::ate</code></td><td>Set the initial position at the end of the file.<br>
+If this flag is not set, the initial position is the beginning of the file.</td></tr>
+<tr><td><code>ios::app</code></td><td>All output operations are performed at the end of the file, appending the content to the current content of the file.</td></tr>
+<tr><td><code>ios::trunc</code></td><td>If the file is opened for output operations and it already existed, its previous content is deleted and replaced by the new one.</td></tr>
+</table>
+<br>
+All these flags can be combined using the bitwise operator OR (<code>|</code>). For example, if we want to open the file <code>example.bin</code> in binary mode to add data we could do it by the following call to member function <code>open</code>:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>1<br>2<br></code></pre></td>
+<td class="source"><pre><code>ofstream myfile;
+myfile.open (<kbd>"example.bin"</kbd>, ios::out | ios::app | ios::binary); </code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Each of the <code>open</code> member functions of classes <code>ofstream</code>, <code>ifstream</code> and <code>fstream</code> has a default mode that is used if the file is opened without a second argument:<br>
+<br>
+<table class="boxed">
+<tr><th>class</th><th>default mode parameter</th></tr>
+<tr><td><code>ofstream</code></td><td>ios::out</td></tr>
+<tr><td><code>ifstream</code></td><td>ios::in</td></tr>
+<tr><td><code>fstream</code></td><td>ios::in | ios::out</td></tr>
+</table>
+<br>
+For <code>ifstream</code> and <code>ofstream</code> classes, <code>ios::in</code> and <code>ios::out</code> are automatically and respectively assumed, even if a mode that does not include them is passed as second argument to the <code>open</code> member function (the flags are combined).<br>
+<br>
+For <code>fstream</code>, the default value is only applied if the function is called without specifying any value for the mode parameter. If the function is called with any value in that parameter the default mode is overridden, not combined.<br>
+<br>
+File streams opened in <i>binary mode</i> perform input and output operations independently of any format considerations. Non-binary files are known as <i>text files</i>, and some translations may occur due to formatting of some special characters (like newline and carriage return characters).<br>
+<br>
+Since the first task that is performed on a file stream is generally to open a file, these three classes include a constructor that automatically calls the <code>open</code> member function and has the exact same parameters as this member. Therefore, we could also have declared the previous <code>myfile</code> object and conduct the same opening operation in our previous example by writing:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>&nbsp;</code></pre></td>
+<td class="source"><pre><code>ofstream myfile (<kbd>"example.bin"</kbd>, ios::out | ios::app | ios::binary);</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Combining object construction and stream opening in a single statement. Both forms to open a file are valid and equivalent.<br>
+<br>
+To check if a file stream was successful opening a file, you can do it by calling to member <code>is_open</code>. This member function returns a <code>bool</code> value of <code>true</code> in the case that indeed the stream object is associated with an open file, or <code>false</code> otherwise:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>&nbsp;</code></pre></td>
+<td class="source"><pre><code><var>if</var> (myfile.is_open()) { <cite>/* ok, proceed with output */</cite> }</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+</section>
+<br>
+<section id="closing_a_file">
+<h3>Closing a file</h3>
+When we are finished with our input and output operations on a file we shall close it so that the operating system is notified and its resources become available again. For that, we call the stream's member function <code>close</code>. This member function takes flushes the associated buffers and closes the file:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>&nbsp;</code></pre></td>
+<td class="source"><pre><code>myfile.close();</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Once this member function is called, the stream object can be re-used to open another file, and the file is available again to be opened by other processes.<br>
+<br>
+In case that an object is destroyed while still associated with an open file, the destructor automatically calls the member function <code>close</code>.<br>
+</section>
+<br>
+<section id="text_files">
+<h3>Text files</h3>
+Text file streams are those where the <code>ios::binary</code> flag is not included in their opening mode. These files are designed to store text and thus all values that are input or output from/to them can suffer some formatting transformations, which do not necessarily correspond to their literal binary value.<br>
+<br>
+Writing operations on text files are performed in the same way we operated with <code>cout</code>:<br>
+<br>
+<div class="auto"><table class="split"><tr><td class="rownum"><pre><code>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br></code></pre></td>
+<td class="source"><pre><code><cite>// writing on a text file</cite>
+<dfn>#include &lt;iostream&gt;</dfn>
+<dfn>#include &lt;fstream&gt;</dfn>
+<var>using</var> <var>namespace</var> std;
+
+<var>int</var> main () {
+  ofstream myfile (<kbd>"example.txt"</kbd>);
+  <var>if</var> (myfile.is_open())
+  {
+    myfile &lt;&lt; <kbd>"This is a line.\n"</kbd>;
+    myfile &lt;&lt; <kbd>"This is another line.\n"</kbd>;
+    myfile.close();
+  }
+  <var>else</var> cout &lt;&lt; <kbd>"Unable to open file"</kbd>;
+  <var>return</var> 0;
+}</code></pre></td>
+<td class="output"><pre><samp>[file example.txt]
+This is a line.
+This is another line.</samp></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Reading from a file can also be performed in the same way that we did with <code>cin</code>:<br>
+<br>
+<div class="auto"><table class="split"><tr><td class="rownum"><pre><code>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br></code></pre></td>
+<td class="source"><pre><code><cite>// reading a text file</cite>
+<dfn>#include &lt;iostream&gt;</dfn>
+<dfn>#include &lt;fstream&gt;</dfn>
+<dfn>#include &lt;string&gt;</dfn>
+<var>using</var> <var>namespace</var> std;
+
+<var>int</var> main () {
+  string line;
+  ifstream myfile (<kbd>"example.txt"</kbd>);
+  <var>if</var> (myfile.is_open())
+  {
+    <var>while</var> ( getline (myfile,line) )
+    {
+      cout &lt;&lt; line &lt;&lt; <kbd>'\n'</kbd>;
+    }
+    myfile.close();
+  }
+
+  <var>else</var> cout &lt;&lt; <kbd>"Unable to open file"</kbd>; 
+
+  <var>return</var> 0;
+}</code></pre></td>
+<td class="output"><pre><samp>This is a line.
+This is another line.  </samp></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+This last example reads a text file and prints out its content on the screen. We have created a while loop that reads the file line by line, using <samp><a href="/getline">getline</a></samp>. The value returned by <samp><a href="/getline">getline</a></samp> is a reference to the stream object itself, which when evaluated as a boolean expression (as in this while-loop) is <code>true</code> if the stream is ready for more operations, and <code>false</code> if either the end of the file has been reached or if some other error occurred.<br>
+</section>
+<br>
+<section id="checking_state_flags">
+<h3>Checking state flags</h3>
+The following member functions exist to check for specific states of a stream (all of them return a <code>bool</code> value): <br>
+<br>
+<dl>
+<dt><code>bad()</code></dt>
+<dd>Returns <code>true</code> if a reading or writing operation fails. For example, in the case that we try to write to a file that is not open for writing or if the device where we try to write has no space left.</dd>
+<dt><code>fail()</code></dt>
+<dd>Returns <code>true</code> in the same cases as <code>bad()</code>, but also in the case that a format error happens, like when an alphabetical character is extracted when we are trying to read an integer number.</dd>
+<dt><code>eof()</code></dt>
+<dd>Returns <code>true</code> if a file open for reading has reached the end.</dd>
+<dt><code>good()</code></dt>
+<dd>It is the most generic state flag: it returns <code>false</code> in the same cases in which calling any of the previous functions would return <code>true</code>. Note that <code>good</code> and <code>bad</code> are not exact opposites (<code>good</code> checks more state flags at once).</dd>
+</dl>
+<br>
+The member function <code>clear()</code> can be used to reset the state flags.<br>
+</section>
+<br>
+<section id="get_and_put">
+<h3>get and put stream positioning</h3>
+All i/o streams objects keep internally -at least- one internal position:<br>
+<br>
+<code>ifstream</code>, like <code>istream</code>, keeps an internal <i>get position</i> with the location of the element to be read in the next input operation.<br>
+<br>
+<code>ofstream</code>, like <code>ostream</code>, keeps an internal <i>put position</i> with the location where the next element has to be written.<br>
+<br>
+Finally, <code>fstream</code>, keeps both, the <i>get</i> and the <i>put position</i>, like <code>iostream</code>.<br>
+<br>
+These internal stream positions point to the locations within the stream where the next reading or writing operation is performed. These positions can be observed and modified using the following member functions: <br>
+<br>
+<h4>tellg() and tellp()</h4>
+These two member functions with no parameters return a value of the member type <code>streampos</code>, which is a type representing the current <i>get position</i> (in the case of <code>tellg</code>) or the <i>put position</i> (in the case of <code>tellp</code>).<br>
+<br>
+<h4>seekg() and seekp()</h4>
+These functions allow to change the location of the <i>get</i> and <i>put positions</i>. Both functions are overloaded with two different prototypes. The first form is:<br>
+<br>
+<code>
+seekg ( position );<br>
+seekp ( position );<br>
+</code>
+<br>
+Using this prototype, the stream pointer is changed to the absolute position <code>position</code> (counting from the beginning of the file). The type for this parameter is <code>streampos</code>, which is the same type as returned by functions <code>tellg</code> and <code>tellp</code>.<br>
+<br>
+The other form for these functions is:<br>
+<br>
+<code>
+seekg ( offset, direction );<br>
+seekp ( offset, direction );<br>
+</code>
+<br>
+Using this prototype, the <i>get</i> or <i>put position</i> is set to an offset value relative to some specific point determined by the parameter <code>direction</code>. <code>offset</code> is of type <code>streamoff</code>. And <code>direction</code> is of type <code>seekdir</code>, which is an <i>enumerated type</i> that determines the point from where offset is counted from, and that can take any of the following values:<br>
+<br>
+<table class="boxed">
+<tr><td><code>ios::beg</code></td><td>offset counted from the beginning of the stream</td></tr>
+<tr><td><code>ios::cur</code></td><td>offset counted from the current position</td></tr>
+<tr><td><code>ios::end</code></td><td>offset counted from the end of the stream</td></tr>
+</table>
+<br>
+The following example uses the member functions we have just seen to obtain the size of a file: <br>
+<br>
+<div class="auto"><table class="split"><tr><td class="rownum"><pre><code>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br></code></pre></td>
+<td class="source"><pre><code><cite>// obtaining file size</cite>
+<dfn>#include &lt;iostream&gt;</dfn>
+<dfn>#include &lt;fstream&gt;</dfn>
+<var>using</var> <var>namespace</var> std;
+
+<var>int</var> main () {
+  streampos begin,end;
+  ifstream myfile (<kbd>"example.bin"</kbd>, ios::binary);
+  begin = myfile.tellg();
+  myfile.seekg (0, ios::end);
+  end = myfile.tellg();
+  myfile.close();
+  cout &lt;&lt; <kbd>"size is: "</kbd> &lt;&lt; (end-begin) &lt;&lt; <kbd>" bytes.\n"</kbd>;
+  <var>return</var> 0;
+}</code></pre></td>
+<td class="output"><pre><samp>size is: 40 bytes.</samp></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Notice the type we have used for variables <code>begin</code> and <code>end</code>:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>&nbsp;</code></pre></td>
+<td class="source"><pre><code>streampos size;</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+<code>streampos</code> is a specific type used for buffer and file positioning and is the type returned by <code>file.tellg()</code>. Values of this type can safely be subtracted from other values of the same type, and can also be converted to an integer type large enough to contain the size of the file.<br>
+<br>
+These stream positioning functions use two particular types: <code>streampos</code> and <code>streamoff</code>. These types are also defined as member types of the stream class:<br>
+<br>
+<table class="boxed">
+<tr><th>Type</th><th>Member type</th><th>Description</th></tr>
+<tr><td><code><a href="/streampos">streampos</a></code></td><td><code><a href="/ios#types">ios::pos_type</a></code></td><td>Defined as <code><a href="/fpos">fpos&lt;mbstate_t&gt;</a></code>.<br>
+It can be converted to/from <code><a href="/streamoff">streamoff</a></code> and can be added or subtracted values of these types.</td></tr>
+<tr><td><code><a href="/streamoff">streamoff</a></code></td><td><code><a href="/ios#types">ios::off_type</a></code></td><td>It is an alias of one of the fundamental integral types (such as <code>int</code> or <code>long long</code>).</td></tr>
+</table>
+<br>
+Each of the member types above is an alias of its non-member equivalent (they are the exact same type). It does not matter which one is used. The member types are more generic, because they are the same on all stream objects (even on streams using exotic types of characters), but the non-member types are widely used in existing code for historical reasons.<br>
+</section>
+<br>
+<section id="binary_files">
+<h3>Binary files</h3>
+For binary files, reading and writing data with the extraction and insertion operators (<code>&lt;&lt;</code> and <code>&gt;&gt;</code>) and functions like <code>getline</code> is not efficient, since we do not need to format any data and data is likely not formatted in lines.<br>
+<br>
+File streams include two member functions specifically designed to read and write binary data sequentially: <code>write</code> and <code>read</code>. The first one (<code>write</code>) is a member function of <code>ostream</code> (inherited by <code>ofstream</code>). And <code>read</code> is a member function of <code>istream</code> (inherited by <code>ifstream</code>). Objects of class <code>fstream</code> have both. Their prototypes are:<br>
+<br>
+<tt>
+write ( memory_block, size );<br>
+read ( memory_block, size );<br>
+</tt>
+<br>
+Where <code>memory_block</code> is of type <code>char*</code> (pointer to <code>char</code>), and represents the address of an array of bytes where the read data elements are stored or from where the data elements to be written are taken. The <code>size</code> parameter is an integer value that specifies the number of characters to be read or written from/to the memory block.<br>
+<br>
+<div class="auto"><table class="split"><tr><td class="rownum"><pre><code>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br></code></pre></td>
+<td class="source"><pre><code><cite>// reading an entire binary file</cite>
+<dfn>#include &lt;iostream&gt;</dfn>
+<dfn>#include &lt;fstream&gt;</dfn>
+<var>using</var> <var>namespace</var> std;
+
+<var>int</var> main () {
+  streampos size;
+  <var>char</var> * memblock;
+
+  ifstream file (<kbd>"example.bin"</kbd>, ios::in|ios::binary|ios::ate);
+  <var>if</var> (file.is_open())
+  {
+    size = file.tellg();
+    memblock = <var>new</var> <var>char</var> [size];
+    file.seekg (0, ios::beg);
+    file.read (memblock, size);
+    file.close();
+
+    cout &lt;&lt; <kbd>"the entire file content is in memory"</kbd>;
+
+    <var>delete</var>[] memblock;
+  }
+  <var>else</var> cout &lt;&lt; <kbd>"Unable to open file"</kbd>;
+  <var>return</var> 0;
+}</code></pre></td>
+<td class="output"><pre><samp>the entire file content is in memory</samp></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+In this example, the entire file is read and stored in a memory block. Let's examine how this is done:<br>
+<br>
+First, the file is open with the <code>ios::ate</code> flag, which means that the get pointer will be positioned at the end of the file. This way, when we call to member <code>tellg()</code>, we will directly obtain the size of the file.<br>
+<br>
+Once we have obtained the size of the file, we request the allocation of a memory block large enough to hold the entire file:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>&nbsp;</code></pre></td>
+<td class="source"><pre><code>memblock = <var>new</var> <var>char</var>[size];</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+Right after that, we proceed to set the <i>get position</i> at the beginning of the file (remember that we opened the file with this pointer at the end), then we read the entire file, and finally close it:<br>
+<br>
+<div class="auto"><table class="snippet"><tr><td class="rownum"><pre><code>1<br>2<br>3<br></code></pre></td>
+<td class="source"><pre><code>file.seekg (0, ios::beg);
+file.read (memblock, size);
+file.close();</code></pre></td><td class="C_btnholder"></td></tr></table></div>
+<br>
+<br>
+At this point we could operate with the data obtained from the file. But our program simply announces that the content of the file is in memory and then finishes.<br>
+</section>
+<br>
+<section id="buffers_and_sync">
+<h3>Buffers and Synchronization</h3>
+When we operate with file streams, these are associated to an internal buffer object of type <code>streambuf</code>. This buffer object may represent a memory block that acts as an intermediary between the stream and the physical file. For example, with an <code>ofstream</code>, each time the member function <code>put</code> (which writes a single character) is called, the character may be inserted in this intermediate buffer instead of being written directly to the physical file with which the stream is associated.<br>
+<br>
+The operating system may also define other layers of buffering for reading and writing to files.<br>
+<br>
+When the buffer is flushed, all the data contained in it is written to the physical medium (if it is an output stream). This process is called <i>synchronization</i> and takes place under any of the following circumstances: <br>
+<br>
+<ul>
+<li><b>When the file is closed:</b> before closing a file, all buffers that have not yet been flushed are synchronized and all pending data is written or read to the physical medium.</li>
+<li><b>When the buffer is full:</b> Buffers have a certain size. When the buffer is full it is automatically synchronized.</li>
+<li><b>Explicitly, with manipulators:</b> When certain manipulators are used on streams, an explicit synchronization takes place. These manipulators are: <code><a href="/flush">flush</a></code> and <code><a href="/endl">endl</a></code>.</li>
+<li><b>Explicitly, with member function sync():</b> Calling the stream's member function <code>sync()</code> causes an immediate synchronization. This function returns an <code>int</code> value equal to <tt>-1</tt> if the stream has no associated buffer or in case of failure. Otherwise (if the stream buffer was successfully synchronized) it returns <code>0</code>.</li>
+</ul>
+</section><table class="C_docPrevNext"><tr><td class="prev"><a href="/doc/tutorial/preprocessor/" rel="prev"><img src="/ico/32arrowleft.png" width="32" height="32" alt="Previous">Previous:<br><b>Preprocessor directives</b></a></td><td class="index"><a href="/doc/tutorial/" rel="index"><img src="/ico/32doc.png" width="32" height="32" alt="Index"><br>Index</a></td><td class="next"></td></tr></table></div><div id="CH_bb"></div></div>
+<!-- leaderboard -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-1444228343479937"
+     data-ad-slot="9701143201"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div id="I_nav">
+<div class="sect root">
+<h3><b><a href="/">C++</a></b></h3>
+<ul>
+<li class="folder info"><a href="/info/">Information</a></li>
+<li class="folder selected doc"><a href="/doc/">Tutorials</a></li>
+<li class="folder reference"><a href="/reference/">Reference</a></li>
+<li class="folder articles"><a href="/articles/">Articles</a></li>
+<li class="folder forum"><a href="/forum/">Forum</a></li>
+</ul>
+</div>
+<div class="C_BoxLabels C_BoxSort sect" id="doc_box">
+<h3><b><a href="/doc/">Tutorials</a></b></h3>
+<ul>
+<li class="cpp98 cpp11 selected folder"><a href="/doc/tutorial/"><span>C++ Language</span></a></li>
+<li><a href="/doc/ascii/"><span>Ascii Codes</span></a></li>
+<li><a href="/doc/boolean/"><span>Boolean Operations</span></a></li>
+<li><a href="/doc/hex/"><span>Numerical Bases</span></a></li>
+</ul>
+</div>
+<div class="C_BoxLabels C_BoxSort sect cpp98 cpp11" id="tutorial_box">
+<h3><b><a href="/doc/tutorial/">C++ Language</a></b></h3>
+<ul>
+<li class="C_Collapsable"><h4>Introduction:</h4><ul>
+<li class="folder"><a href="/doc/tutorial/introduction/"><span>Compilers</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Basics of C++:</h4><ul>
+<li><a href="/doc/tutorial/program_structure/"><span>Structure of a program</span></a></li>
+<li><a href="/doc/tutorial/variables/"><span>Variables and types</span></a></li>
+<li><a href="/doc/tutorial/constants/"><span>Constants</span></a></li>
+<li><a href="/doc/tutorial/operators/"><span>Operators</span></a></li>
+<li><a href="/doc/tutorial/basic_io/"><span>Basic Input/Output</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Program structure:</h4><ul>
+<li><a href="/doc/tutorial/control/"><span>Statements and flow control</span></a></li>
+<li><a href="/doc/tutorial/functions/"><span>Functions</span></a></li>
+<li><a href="/doc/tutorial/functions2/"><span>Overloads and templates</span></a></li>
+<li><a href="/doc/tutorial/namespaces/"><span>Name visibility</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Compound data types:</h4><ul>
+<li><a href="/doc/tutorial/arrays/"><span>Arrays</span></a></li>
+<li><a href="/doc/tutorial/ntcs/"><span>Character sequences</span></a></li>
+<li><a href="/doc/tutorial/pointers/"><span>Pointers</span></a></li>
+<li><a href="/doc/tutorial/dynamic/"><span>Dynamic memory</span></a></li>
+<li><a href="/doc/tutorial/structures/"><span>Data structures</span></a></li>
+<li><a href="/doc/tutorial/other_data_types/"><span>Other data types</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Classes:</h4><ul>
+<li><a href="/doc/tutorial/classes/"><span>Classes (I)</span></a></li>
+<li><a href="/doc/tutorial/templates/"><span>Classes (II)</span></a></li>
+<li><a href="/doc/tutorial/classes2/"><span>Special members</span></a></li>
+<li><a href="/doc/tutorial/inheritance/"><span>Friendship and inheritance</span></a></li>
+<li><a href="/doc/tutorial/polymorphism/"><span>Polymorphism</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Other language features:</h4><ul>
+<li><a href="/doc/tutorial/typecasting/"><span>Type conversions</span></a></li>
+<li><a href="/doc/tutorial/exceptions/"><span>Exceptions</span></a></li>
+<li><a href="/doc/tutorial/preprocessor/"><span>Preprocessor directives</span></a></li>
+</ul></li>
+<li class="C_Collapsable"><h4>Standard library:</h4><ul>
+<li class="selected"><a href="/doc/tutorial/files/"><span>Input/output with files</span></a></li>
+</ul></li>
+</ul>
+</div>
+<div id="I_subnav"></div>
+<div class="C_ad234">
+<!-- leftbutton -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:234px;height:60px"
+     data-ad-client="ca-pub-1444228343479937"
+     data-ad-slot="3817422056"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>			
+</div></div>
+<div id="I_midclear"></div>
+</div>
+</div>
+<div id="I_bottom">
+<div id="I_footer">
+	<a href="/">Home page</a> | <a href="/privacy.do">Privacy policy</a><br>&copy; cplusplus.com, 2000-2022 - All rights reserved - <i>v3.2</i><br><a href="/contact.do?referrer=legacy.cplusplus.com%2Fdoc%2Ftutorial%2Ffiles%2F">Spotted an error? contact us</a>
+</div>
+</div>
+
+<script type="text/javascript">
+<!--
+ onSession ( function(us) {
+		el=document.getElementById('CH_bb'); el.innerHTML='';
+		if (us.auth(4096)) {
+			
+			el.appendChild(btn('Edit Page','Edit Page','edit','/doc/edit.cgi?a=tutorial+files'));
+			el.appendChild(btn('Delete Page','Delete Page','delete','javascript:docdel()'));
+		}
+	});
+	function docdel() { if (confirm('WARNING: You are about to delete this page. Confirm?')) window.location='/doc/delete.cgi?a=tutorial+files'; }
+	ready();
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7TV1TJ13CV');
+//-->
+</script>
+
+</body>
+</html>
