@@ -2,6 +2,10 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+1. Из файла вида: 
+2. Написать функцию load(), которая загружает группу из файла;
+
+DONE:
 Перегрузить оператор вывода на экран для всех классов.
 
 DONE:

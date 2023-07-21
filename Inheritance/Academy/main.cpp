@@ -62,6 +62,7 @@ public:
 	}
 	virtual std::ofstream& print(std::ofstream& ofs)const
 	{
+		ofs << typeid(*this).name() << ":\t";
 		ofs.width(LAST_NAME_WIDTH);
 		ofs << std::left;
 		ofs << last_name;
@@ -263,6 +264,12 @@ public:
 		Student::print(os) << " ";
 		return os << subject;
 	}
+	std::ofstream& print(std::ofstream& ofs)const
+	{
+		Student::print(ofs);
+		ofs << subject;
+		return ofs;
+	}
 };
 
 void print(Human** group, const int n)
@@ -286,6 +293,28 @@ void save(Human** group, const int size, const char filename[])
 	std::string command = "start notepad ";
 	command += filename;
 	system(command.c_str());
+}
+Human** load(const std::string& filename, int& n)
+{
+	Human** group = nullptr;
+	std::ifstream fin(filename);
+	if (fin.is_open())
+	{
+		//1) Определяем размер массива:
+		for(n=0;!fin.eof();n++)
+		{
+			std::string buffer;
+			std::getline(fin, buffer);
+		}
+		//2) Выделяем память под массив:
+		group = new Human*[--n]{};
+		fin.close();
+	}
+	else
+	{
+		std::cerr << "Error: file not found" << endl;
+	}
+	return group;
 }
 
 //#define INHERITANCE
