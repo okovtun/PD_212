@@ -2,6 +2,11 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+Реализовать иерархию геометрических фигур: квадрат, прямоугольник, круг, треугольник.......
+Сгенерировать фигуры в случайном порядке, и для каждой фигуры вывести ее первичные своиства: длина стороны, радиус .....
+и вторичные свойства, такие как: площадь и периметр. Каждую фигуру так же нужно нарисовать.
+
+DONE:
 1. Из файла вида '201 RAW.txt' создать еще два файла:	https://github.com/okovtun/PD_212/blob/master/Inheritance/Files/201%20RAW.txt
 	-"201 ready.txt", в котором столбцы MAC и IP просто поменяны местами;
 	-"201dhcpd":https://github.com/okovtun/PD_212/blob/master/Inheritance/Files/201.dhcpd
