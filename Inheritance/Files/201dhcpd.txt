@@ -1,0 +1,60 @@
+host-1
+{
+	hardware ethernet:	00:19:99:b4:c2:ae;
+	fixed-address:		192.168.100.21;
+}
+host-2
+{
+	hardware ethernet:	00:19:99:ae:a8:8e;
+	fixed-address:		192.168.100.22;
+}
+host-3
+{
+	hardware ethernet:	00:19:99:b5:e9:9b;
+	fixed-address:		192.168.100.23;
+}
+host-4
+{
+	hardware ethernet:	00:19:99:b4:a2:ed;
+	fixed-address:		192.168.100.24;
+}
+host-5
+{
+	hardware ethernet:	00:19:99:ad:4f:51;
+	fixed-address:		192.168.100.25;
+}
+host-6
+{
+	hardware ethernet:	00:19:99:dc:52:80;
+	fixed-address:		192.168.100.26;
+}
+host-7
+{
+	hardware ethernet:	00:19:99:b4:a2:fb;
+	fixed-address:		192.168.100.27;
+}
+host-8
+{
+	hardware ethernet:	00:19:99:b2:b3:e6;
+	fixed-address:		192.168.100.28;
+}
+host-9
+{
+	hardware ethernet:	00:19:99:ae:a5:59;
+	fixed-address:		192.168.100.29;
+}
+host-10
+{
+	hardware ethernet:	00:19:99:dc:52:77;
+	fixed-address:		192.168.100.30;
+}
+host-11
+{
+	hardware ethernet:	00:19:99:ac:b8:11;
+	fixed-address:		192.168.100.31;
+}
+host-12
+{
+	hardware ethernet:	00:19:99:b5:e9:4d;
+	fixed-address:		192.168.100.32;
+}

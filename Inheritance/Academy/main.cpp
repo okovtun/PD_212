@@ -58,7 +58,15 @@ public:
 
 	virtual std::ostream& print(std::ostream& os)const
 	{
-		return os << last_name << " " << first_name << " " << age;
+		//return os << last_name << " " << first_name << " " << age;
+		os.width(LAST_NAME_WIDTH);
+		os << std::left;
+		os << last_name;
+		os.width(FIRST_NAME_WIDTH);
+		os << first_name;
+		os.width(AGE_WIDTH);
+		os << age;
+		return os;
 	}
 	virtual std::ofstream& print(std::ofstream& ofs)const
 	{
@@ -72,6 +80,11 @@ public:
 		ofs.width(AGE_WIDTH);
 		ofs << age;
 		return ofs;
+	}
+	virtual std::ifstream& scan(std::ifstream& ifs)
+	{
+		ifs >> last_name >> first_name >> age;
+		return ifs;
 	}
 
 	//__vfptr - Virtual Functions Pointers
@@ -92,10 +105,15 @@ std::ofstream& operator<<(std::ofstream& ofs, const Human& obj)
 	obj.print(ofs);
 	return ofs;
 }
+std::ifstream& operator>>(std::ifstream& ifs, Human& obj)
+{
+	obj.scan(ifs);
+	return ifs;
+}
 
 class Student :public Human
 {
-	static const int SPECIALITY_WIDTH = 22;
+	static const int SPECIALITY_WIDTH = 28;
 	static const int GROUP_WIDTH = 7;
 	static const int RATING_WIDTH = 8;
 	static const int ATTENDANCE_WIDTH = 8;
@@ -174,6 +192,19 @@ public:
 		ofs << attendance;
 		return ofs;
 	}
+	std::ifstream& scan(std::ifstream& ifs)
+	{
+		Human::scan(ifs);
+		char sz_speciality[SPECIALITY_WIDTH + 1] = {};
+		ifs.read(sz_speciality, SPECIALITY_WIDTH);
+		for (int i = strlen(sz_speciality) - 1; sz_speciality[i] == ' '; i--)sz_speciality[i] = 0;
+		while (sz_speciality[0] == ' ')
+			for (int i = 0; sz_speciality[i]; i++)
+				sz_speciality[i] = sz_speciality[i + 1];
+		this->speciality = sz_speciality;
+		ifs >> group >> rating >> attendance;
+		return ifs;
+	}
 };
 //std::ostream& operator<<(std::ostream& os, const Student& obj)
 //{
@@ -182,7 +213,7 @@ public:
 
 class Teacher :public Human
 {
-	static const int SPECIALITY_WIDTH = 22;
+	static const int SPECIALITY_WIDTH = 28;
 	static const int EXPERIENCE_WIDTH = 5;
 	std::string speciality;
 	int experience;
@@ -231,6 +262,19 @@ public:
 		ofs << experience;
 		return ofs;
 	}
+	std::ifstream& scan(std::ifstream& ifs)
+	{
+		Human::scan(ifs);
+		char sz_speciality[SPECIALITY_WIDTH + 1] = {};
+		ifs.read(sz_speciality, SPECIALITY_WIDTH);
+		for (int i = strlen(sz_speciality) - 1; sz_speciality[i] == ' '; i--)sz_speciality[i] = 0;
+		while (sz_speciality[0] == ' ')
+			for (int i = 0; sz_speciality[i]; i++)
+				sz_speciality[i] = sz_speciality[i + 1];
+		this->speciality = sz_speciality;
+		ifs >> experience;
+		return ifs;
+	}
 };
 
 class Graduate :public Student
@@ -270,6 +314,12 @@ public:
 		ofs << subject;
 		return ofs;
 	}
+	std::ifstream& scan(std::ifstream& ifs)
+	{
+		Student::scan(ifs);
+		std::getline(ifs, subject);
+		return ifs;
+	}
 };
 
 void print(Human** group, const int n)
@@ -281,18 +331,29 @@ void print(Human** group, const int n)
 		group[i]->print();*/
 		//if(typeid(*group[i]) == typeid(Student))
 		//cout << *dynamic_cast<Student*>(group[i]) << endl;//Downcast
-		cout << *group[i] << endl;
+		if (group[i] == nullptr)continue;
+		if(group[i])cout << *group[i] << endl;
 		cout << "\n------------------------------------\n";
 	}
 }
 void save(Human** group, const int size, const char filename[])
 {
 	std::ofstream fout(filename);
-	for (int i = 0; i < size; i++)fout << *group[i] << endl;
+	for (int i = 0; i < size; i++)
+		if(group[i])
+			fout << *group[i] << endl;
 	fout.close();
 	std::string command = "start notepad ";
 	command += filename;
 	system(command.c_str());
+}
+Human* HumanFactory(const std::string& type)
+{
+	if (type.find("Teacher") != std::string::npos)return new Teacher("", "", 0, "", 0);
+	if (type.find("Student") != std::string::npos)return new Student("", "", 0, "", "", 0, 0);
+	if (type.find("Graduate") != std::string::npos)return new Graduate("", "", 0, "", "", 0, 0, "");
+	//return new Human("", "", 0);
+	return nullptr;
 }
 Human** load(const std::string& filename, int& n)
 {
@@ -308,6 +369,18 @@ Human** load(const std::string& filename, int& n)
 		}
 		//2) Выделяем память под массив:
 		group = new Human*[--n]{};
+		//3) Возвращаемся в начало файла:
+		fin.clear();
+		fin.seekg(0);
+		//4) Создаем и читаем объекты:
+		for (int i = 0; i < n; i++)
+		{
+			std::string type;
+			std::getline(fin, type, ':');
+			fin.ignore();
+			group[i] = HumanFactory(type);
+			if(group[i])fin >> *group[i];
+		}
 		fin.close();
 	}
 	else
@@ -318,6 +391,8 @@ Human** load(const std::string& filename, int& n)
 }
 
 //#define INHERITANCE
+//#define STORE_TO_FILE
+#define READ_FROM_FILE
 
 void main()
 {
@@ -338,8 +413,9 @@ void main()
 #endif // INHERITANCE
 
 
+#ifdef STORE_TO_FILE
 	//Generalisation 
-	//Upcast
+//Upcast
 	Human* tomas = new Student("Vercetty", "Tommi", 30, "Theft", "Vice", 95, 98);
 	tomas->print(cout);
 
@@ -366,6 +442,13 @@ void main()
 
 	print(group, sizeof(group) / sizeof(group[0]));
 	save(group, sizeof(group) / sizeof(group[0]), "group.txt");
+#endif // STORE_TO_FILE
+
+#ifdef READ_FROM_FILE
+	int n = 0;
+	Human** group = load("group.txt", n);
+	print(group, n);
+#endif // READ_FROM_FILE
 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
