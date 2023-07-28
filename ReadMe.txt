@@ -2,6 +2,11 @@ https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
 
 TODO:
+1. ƒобавить в иерархию недостающие фигуры;
+2. ¬се фигуры нарисовать при помощи WinGDI:	https://learn.microsoft.com/en-us/windows/win32/gdi/filled-shapes
+3. ƒобавить иерархию треугольников:	https://learn.microsoft.com/en-us/windows/win32/gdi/about-filled-shapes
+
+DONE:
 –еализовать иерархию геометрических фигур: квадрат, пр€моугольник, круг, треугольник.......
 —генерировать фигуры в случайном пор€дке, и дл€ каждой фигуры вывести ее первичные своиства: длина стороны, радиус .....
 и вторичные свойства, такие как: площадь и периметр.  аждую фигуру так же нужно нарисовать.
