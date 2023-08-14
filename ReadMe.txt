@@ -1,7 +1,22 @@
 https://github.com/okovtun/PD_212
 https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7krw
+https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+В классе ForwardList реализовать следующие методы:
+1. void pop_front();	//удаляет начальный элемент списка
+2. void pop_back();		//удаляет последний элемент списка
+3. void insert(???);	//вставляет элемент в список по заданному индексу
+4. void erase(???);		//удаляет элемент из списка по заданному индексу
+5. Деструктор списка должен удалять все элементы списка;
+6. CopyMethods;
+7. MoveMethods;
+
+
+TODO:
+1. Вынести общий код для рисования геометрических фигур в базовый класс;
+
+DONE:
 1. Добавить в иерархию недостающие фигуры;
 2. Все фигуры нарисовать при помощи WinGDI:	https://learn.microsoft.com/en-us/windows/win32/gdi/filled-shapes
 3. Добавить иерархию треугольников:	https://learn.microsoft.com/en-us/windows/win32/gdi/about-filled-shapes
