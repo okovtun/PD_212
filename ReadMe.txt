@@ -11,7 +11,8 @@ TODO:
 5. Деструктор списка должен удалять все элементы списка;					DONE
 6. CopyMethods;													DONE
 7. MoveMethods;
-
+8. Проверочный код в секции 'RANGE_BASED_FOR_LIST' должен заработать:
+	https://github.com/okovtun/PD_212/blob/4bd8aa566a89891059f65de29050a11d1cbc55ce/DataContainers/ForwardList/main.cpp#L221C17-L221C17
 
 TODO:
 1. Вынести общий код для рисования геометрических фигур в базовый класс;
