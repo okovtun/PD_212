@@ -3,6 +3,9 @@ https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7
 https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+Реализовать двусвязный список.
+
+DONE:
 В классе ForwardList реализовать следующие методы:
 1. void pop_front();	//удаляет начальный элемент списка					DONE
 2. void pop_back();		//удаляет последний элемент списка					DONE
