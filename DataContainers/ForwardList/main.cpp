@@ -1,6 +1,6 @@
 ﻿//ForwardList
 #include<iostream>
-using namespace std;
+//using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -23,16 +23,74 @@ public:
 		cout << "EDestructor:\t" << this << endl;
 	}
 	friend class ForwardList;
+	friend class Iterator;
 	friend ForwardList operator+(const ForwardList& left, const ForwardList& right);
+};
+class Iterator
+{
+	Element* Temp;
+public:
+	Iterator(Element* Temp = nullptr) :Temp(Temp)
+	{
+		cout << "ItConstructor:\t" << this << endl;
+	}
+	~Iterator()
+	{
+		cout << "ItDestructor:\t" << this << endl;
+	}
+
+	Iterator& operator++()
+	{
+		Temp = Temp->pNext;
+		return *this;
+	}
+
+	bool operator==(const Iterator& other)const
+	{
+		return this->Temp == other.Temp;
+	}
+	bool operator!=(const Iterator& other)const
+	{
+		return this->Temp != other.Temp;
+	}
+
+	int operator*()
+	{
+		return Temp->Data;
+	}
 };
 class ForwardList
 {
 	Element* Head;	//Голова списка - содержит адрес начального элемента списка
 public:
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
+	}
 	ForwardList()
 	{
 		Head = nullptr;	//Если список пуст, то его голова указывает на 0
 		cout << "LConstructor:\t" << this << endl;
+	}
+	ForwardList(const std::initializer_list<int>& il):ForwardList()
+	{
+		//begin() - возвращает итератор на начало контейнера
+		//end()   - возвращает итератор на конец контейнера
+		cout << typeid(il.begin()).name() << endl;
+		//https://legacy.cplusplus.com/doc/tutorial/pointers/#:~:text=legibility%20to%20expressions.-,Pointers%20and%20const,-Pointers%20can%20be
+		cout << typeid(int*).name() << endl;	//int*  - указатель на 'int'
+		cout << typeid(const int*).name() << endl;//const int* - указатель на константу
+		//int* const - консантный указатель
+		//const int* const - констаный указатель на константу
+
+		for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			push_back(*it);
+		}
 	}
 	ForwardList(const ForwardList& other) :ForwardList()
 	{
@@ -220,6 +278,7 @@ void main()
 
 #ifdef RANGE_BASED_FOR_LIST
 	ForwardList list = { 3, 5, 8, 13, 21 };
+	list.print();
 	for (int i : list)
 	{
 		cout << i << tab;
