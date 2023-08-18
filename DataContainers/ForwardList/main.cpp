@@ -4,7 +4,9 @@
 using std::cin;
 using std::cout;
 using std::endl;
+
 #define tab "\t"
+#define delimiter "\n--------------------------------------------\n"
 
 class ForwardList;
 ForwardList operator+(const ForwardList& left, const ForwardList& right);
@@ -100,9 +102,11 @@ public:
 			push_back(Temp->Data);*/
 		*this = other;
 	}
-	ForwardList(ForwardList&& other)//ForwardList&& - r-value reference
+	ForwardList(ForwardList&& other):ForwardList()//ForwardList&& - r-value reference
 	{
-
+		/*this->Head = other.Head;
+		other.Head = nullptr;*/
+		*this = std::move(other);	//Функция move() принудительно вызывает MoveAssignment для объекта, если он есть.
 	}
 	~ForwardList()
 	{
@@ -119,6 +123,14 @@ public:
 		//Deep copy:
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
 			push_back(Temp->Data);
+		return *this;
+	}
+	ForwardList& operator=(ForwardList&& other)
+	{
+		while (Head)pop_front();
+		this->Head = other.Head;
+		other.Head = nullptr;
+		cout << "LMoveAssignment:\t" << this << endl;
 		return *this;
 	}
 
@@ -205,7 +217,8 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right)
 //#define BASE_CHECK
 //#define OPERATOR_PLUS_CHECK
 //#define RANGE_BASED_FOR_ARRAY
-#define RANGE_BASED_FOR_LIST
+//#define RANGE_BASED_FOR_LIST
+#define MOVE_SEMANTIC_CHECK
 
 void main()
 {
@@ -285,5 +298,21 @@ void main()
 	}
 	cout << endl;
 #endif // RANGE_BASED_FOR_LIST
+
+#ifdef MOVE_SEMANTIC_CHECK
+	ForwardList list1 = { 3, 5, 8, 13, 21 };
+	for (int i : list1)cout << i << tab; cout << endl;
+
+	ForwardList list2 = { 34, 55, 89 };
+	for (int i : list2)cout << i << tab; cout << endl;
+
+	cout << delimiter << endl;
+	//ForwardList list3 = list1 + list2;	//Move constructor
+	ForwardList list3;
+	list3 = list1 + list2;
+	cout << delimiter << endl;
+	for (int i : list3)cout << i << tab; cout << endl;
+
+#endif // MOVE_SEMANTIC_CHECK
 
 }

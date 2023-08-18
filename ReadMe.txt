@@ -13,6 +13,7 @@ TODO:
 7. MoveMethods;
 8. ѕроверочный код в секции 'RANGE_BASED_FOR_LIST' должен заработать:
 	https://github.com/okovtun/PD_212/blob/4bd8aa566a89891059f65de29050a11d1cbc55ce/DataContainers/ForwardList/main.cpp#L221C17-L221C17
+	https://www.boost.org/doc/libs/1_83_0/doc/html/string_algo.html
 
 TODO:
 1. ¬ынести общий код дл€ рисовани€ геометрических фигур в базовый класс;
