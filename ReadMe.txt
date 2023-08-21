@@ -3,6 +3,11 @@ https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7
 https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+Двусвязный список - это двунаправленный контейнер, 
+а любого двунаправленного контейнера есть не только прямой (Iterator),
+но и обратный итератор (ReverseIterator);
+
+DONE:
 Реализовать двусвязный список.
 
 DONE:
