@@ -19,11 +19,15 @@ template<typename T>class Element
 public:
 	Element(T Data, Element<T>* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
+#ifdef DEBUG
 		cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	~Element()
 	{
+#ifdef DEBUG
 		cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	friend class ForwardList<T>;
 	friend class Iterator<T>;
@@ -35,11 +39,15 @@ template<typename T>class Iterator
 public:
 	Iterator(Element<T>* Temp = nullptr) :Temp(Temp)
 	{
+#ifdef DEBUG
 		cout << "ItConstructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	~Iterator()
 	{
+#ifdef DEBUG
 		cout << "ItDestructor:\t" << this << endl;
+#endif // DEBUG
 	}
 
 	Iterator<T>& operator++()
