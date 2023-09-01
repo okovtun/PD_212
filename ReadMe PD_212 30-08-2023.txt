@@ -3,6 +3,12 @@ https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7
 https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+В проекте 'Recursion' реализовать слудующие рекурсивные функции:
+1. int Factorial(int n);	//принимает число, и возвращает факториал этого числа
+2. double Power(double a, int n);	//возводит число 'a' в степень 'n'
+3. void Fibonacci(???);		//выводит на экран ряд Фибоначчи
+
+DONE:
 Разделить двусвязный список на файлы;
 
 DONE:
