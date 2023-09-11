@@ -203,7 +203,8 @@ private:
 	{
 		if (Root == nullptr)
 		{
-			if (depth == 0)cout.width(width*pow(2, (this->depth() - depth)/3));
+			if (depth == 1)cout.width(width*4);
+			if (depth == 0)cout.width(width*2);
 			cout << "";
 			return;
 		}
@@ -288,8 +289,8 @@ template<typename T>void measure(const char* message, const Tree& tree, T(Tree::
 
 //#define BASE_CHECK
 //#define OLD_PREFORMANCE_CHECK
-//#define DEPTH_CHECK
-#define BALANCE_CHECK
+#define DEPTH_CHECK
+//#define BALANCE_CHECK
 
 void main()
 {
@@ -390,8 +391,11 @@ void main()
 	tree.tree_print();
 #endif // DEPTH_CHECK
 
+#ifdef BALANCE_CHECK
 	Tree tree = { 89, 55, 34, 21, 13, 8, 5, 3 };
 	tree.tree_print();
 	tree.balance();
 	tree.tree_print();
+#endif // BALANCE_CHECK
+
 }
