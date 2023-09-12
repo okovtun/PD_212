@@ -3,6 +3,12 @@ https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7
 https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+1. https://legacy.cplusplus.com/reference/stl/
+2. Добавить элемент по указанному индексу в список;
+3. Добавить элемент по указанному индексу в односвязный список;
+
+
+DONE:
 1. Создать ветку 'TemplatedTree' и в ней шаблонизировать Бинарное дерево;
 2. Создать ветку 'SeparatedTree' и в ней разделить шаблонное Бинарное дерево на файлы;
 
