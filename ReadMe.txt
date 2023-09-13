@@ -3,6 +3,15 @@ https://www.youtube.com/watch?v=9JSiZ6RT56o&list=PLeqyOOqxeiIPzkSeyZpJxffGotPeC7
 https://meet.google.com/mho-khdw-fhj?pli=1
 
 TODO:
+1. При выводе базы на экран должен отображаться не номер, а содержание статьи;
+2. Вынести код вывода базы на экран в функцию void print();
+3. Реализовать вывод базы на экран используя range-based-for, !!!И НЕ ИСПОЛЬЗУЯ AUTO!!!;
+4. Написать функцию ??? save(???), которая сохраняет базу в файл;
+5. Написать функцию ??? load(???), которая загружает базу из файла;
+6. Обеспечить добавление нарушений в базу;
+	https://legacy.cplusplus.com/reference/map/map/
+
+DONE:
 1. https://legacy.cplusplus.com/reference/stl/
 2. Добавить элемент по указанному индексу в список;
 3. Добавить элемент по указанному индексу в односвязный список;
