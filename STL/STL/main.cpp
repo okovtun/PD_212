@@ -84,6 +84,7 @@ void main()
 		cout << *it << tab;
 	}
 	cout << endl;
+	cout << typeid(vec.begin()).name() << endl;
 	for (std::vector<int>::reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
 	{
 		cout << *it << tab;
