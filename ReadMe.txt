@@ -6,7 +6,11 @@ TOREAD:
 https://www.codewars.com/kata/578b4f9b7c77f535fc00002f
 
 TODO:
-1. Если объем топлива в баке меньше 5 литров, должен загораться индикатор 'LOW FUEL';
+Скачать и установить Qt:
+https://drive.google.com/drive/folders/1nJUXS1MzBZzO6m9dcGMua-_poyvrlTMp?usp=sharing
+
+TODO:
+1. Если объем топлива в баке меньше 5 литров, должен загораться индикатор 'LOW FUEL';	DONE
 2. Научить машину ездить;
 
 DONE:
